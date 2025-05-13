@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:18' // или node:20, если хочешь поновее
+            args '-u root'
+        }
+    }
 
     stages {
         stage('Install') {
@@ -16,6 +21,7 @@ pipeline {
 
         stage('Archive') {
             steps {
+                sh 'apt update && apt install -y zip'
                 sh 'zip -r build.zip build/'
                 archiveArtifacts artifacts: 'build.zip', fingerprint: true
             }
