@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:18' // или node:20, если хочешь поновее
-            args '-u root'
+            args '-u root --network=host' 
         }
     }
 
